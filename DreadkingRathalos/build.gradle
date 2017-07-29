@@ -1,5 +1,4 @@
 apply plugin: 'java'
-
 sourceCompatibility = '1.8'
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
@@ -11,14 +10,12 @@ sourceCompatibility = '1.8'
 // prefer. In this case NetBeans will not add these tasks but you may rely on
 // your own implementation.
 if (!hasProperty('mainClass')) {
-    ext.mainClass = 'DreadkingRathalos'
+    ext.mainClass = 'main/DreadkingRathalos'
 }
 
 repositories {
     mavenCentral()
-    maven {
-        url  "http://dl.bintray.com/dv8fromtheworld/maven" 
-    }
+    jcenter()
     // You may define additional repositories, or even remove "mavenCentral()".
     // Read more about repositories here:
     //   http://www.gradle.org/docs/current/userguide/dependency_management.html#sec:repositories
@@ -30,4 +27,5 @@ dependencies {
     //   http://www.gradle.org/docs/current/userguide/dependency_management.html#sec:how_to_declare_your_dependencies
     testCompile group: 'junit', name: 'junit', version: '4.10'
     compile 'net.dv8tion:JDA:3.2.0_241'
+    compile 'net.dv8tion:JDA:3.2.0_241:javadoc' //turns out this is how your force javadoc, thanks netbeans
 }

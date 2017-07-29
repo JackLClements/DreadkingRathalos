@@ -64,10 +64,9 @@ public class DreadkingRathalos extends ListenerAdapter{ //currently extends list
         MessageChannel channel = event.getChannel();
         
         String msg = message.getContent(); //message str
-        
         boolean bot = author.isBot(); //is author a bot
-        
         System.out.println(msg);
+        
         
         if(msg.contains("!hello")){
             System.out.println("true");
