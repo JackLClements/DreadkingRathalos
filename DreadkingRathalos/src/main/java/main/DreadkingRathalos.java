@@ -4,6 +4,10 @@ package main;
  */
 
 
+import commands.GreetingEvent;
+import commands.TestCommand;
+
+
 import net.dv8tion.jda.client.entities.Group;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
@@ -46,6 +50,13 @@ public class DreadkingRathalos extends ListenerAdapter{ //currently extends list
         //build blocking blocks until login, async waits until msg, can load resources this way
         try{
             JDA jda = new JDABuilder(AccountType.BOT).setToken(TOKEN).addEventListener(new DreadkingRathalos()).buildBlocking(); //add event listener
+            jda.addEventListener(new GreetingEvent(".greet"));
+            jda.addEventListener(new TestCommand(".test1"));
+            jda.addEventListener(new TestCommand(".test2"));
+            //note you can have a listener for each type of event, it may be easier to write response behaviour programatically this way
+            //NOTE 2 - implement a red-black tree that binds commands to class listeners that then executes accordingly
+            //NOTE 3 - all listeners trigger during all events, so it may be prudent to have a single listener object that passes commands along
+            //use trim to sep. commands
         }
         catch(Exception e){
             e.printStackTrace();
