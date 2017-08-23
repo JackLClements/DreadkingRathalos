@@ -25,8 +25,8 @@ public class Authentication {
     // Note - Nintendo login token - 71b963c1b7b6d119 always the same
     //user ID & pass
 
-    private static final String CLIENT_ID = "template";
-
+    private static final String CLIENT_ID = "71b963c1b7b6d119";
+/*
     public static void main(String[] args) {
         try {
             //login();
@@ -38,7 +38,7 @@ public class Authentication {
             ex.printStackTrace();
         }
     }
-
+*/
     public static String generateRandStr() {
         StringBuilder sb = new StringBuilder();
         String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";

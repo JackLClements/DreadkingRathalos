@@ -5,21 +5,17 @@ package main;
 
 
 import commands.GreetingEvent;
-import commands.TestCommand;
+import commands.TextCommands;
+import commands.TurfWar;
 
 
-import net.dv8tion.jda.client.entities.Group;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
-import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.core.exceptions.PermissionException;
-import net.dv8tion.jda.core.exceptions.RateLimitedException;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
-import javax.security.auth.login.LoginException;
 
 
 
@@ -28,7 +24,7 @@ import javax.security.auth.login.LoginException;
  * @author Jack L. Clements
  */
 public class DreadkingRathalos extends ListenerAdapter{ //currently extends listener, extend to own thread
-    private static final String TOKEN = "MzQwNjE2NDM2NjY4MTcwMjQw.DF1Hyw.lXKU3scjIXzttcBWYUAS8-DbqcA"; //I really ought to obscure this in some fashion
+    private static final String TOKEN = "obscured"; //I really ought to obscure this in some fashion
     //note - https://github.com/DV8FromTheWorld/JDA/blob/master/src/examples/java/MessageListenerExample.java
     /**
      * @param args the command line arguments
@@ -51,8 +47,9 @@ public class DreadkingRathalos extends ListenerAdapter{ //currently extends list
         try{
             JDA jda = new JDABuilder(AccountType.BOT).setToken(TOKEN).addEventListener(new DreadkingRathalos()).buildBlocking(); //add event listener
             jda.addEventListener(new GreetingEvent(".greet"));
-            jda.addEventListener(new TestCommand(".test1"));
-            jda.addEventListener(new TestCommand(".test2"));
+            TextCommands handler = new TextCommands("");
+            handler.add(".turfwar", new TurfWar(".turfwar", "Does a thing"));
+            jda.addEventListener(handler);
             //note you can have a listener for each type of event, it may be easier to write response behaviour programatically this way
             //NOTE 2 - implement a red-black tree that binds commands to class listeners that then executes accordingly
             //NOTE 3 - all listeners trigger during all events, so it may be prudent to have a single listener object that passes commands along
