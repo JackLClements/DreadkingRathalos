@@ -4,24 +4,19 @@ package commands;
 
 import Misc.SquidKids;
 import SplatNet2.Stage;
-import java.io.File;
 import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.MessageBuilder;
-import net.dv8tion.jda.core.entities.MessageEmbed;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 /**
  *
  * @author Jack L. Clements
  */
-public class TurfWar extends SubCommand {
+public class RankedBattle extends SubCommand {
 
-    public TurfWar(String name, String description) {
+    public RankedBattle(String name, String description) {
         super(name, description);
     }
 
@@ -37,8 +32,8 @@ public class TurfWar extends SubCommand {
         
         
         
-        Stage [] stages = SquidKids.turfWar();
-        e.getChannel().sendMessage("The current regular battle stages are...").queue();
+        Stage [] stages = SquidKids.rankedBattle();
+        e.getChannel().sendMessage("The current ranked battle stages (**" + stages[0].getMode() +"**) are...").queue();
         MessageBuilder msg = new MessageBuilder();
         msg.append(stages[0].getName(), MessageBuilder.Formatting.BOLD);
         try {
@@ -64,4 +59,5 @@ public class TurfWar extends SubCommand {
         
         e.getChannel().sendMessage("Until next time - don't get cooked... stay off the hook!").queue();
     }
+    
 }

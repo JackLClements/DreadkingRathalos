@@ -5,6 +5,8 @@ package main;
 
 
 import commands.GreetingEvent;
+import commands.LeagueBattle;
+import commands.RankedBattle;
 import commands.TextCommands;
 import commands.TurfWar;
 
@@ -24,7 +26,7 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter;
  * @author Jack L. Clements
  */
 public class DreadkingRathalos extends ListenerAdapter{ //currently extends listener, extend to own thread
-    private static final String TOKEN = "obscured"; //I really ought to obscure this in some fashion
+    private static final String TOKEN = "placeholder"; //I really ought to obscure this in some fashion
     //note - https://github.com/DV8FromTheWorld/JDA/blob/master/src/examples/java/MessageListenerExample.java
     /**
      * @param args the command line arguments
@@ -46,9 +48,11 @@ public class DreadkingRathalos extends ListenerAdapter{ //currently extends list
         //build blocking blocks until login, async waits until msg, can load resources this way
         try{
             JDA jda = new JDABuilder(AccountType.BOT).setToken(TOKEN).addEventListener(new DreadkingRathalos()).buildBlocking(); //add event listener
-            jda.addEventListener(new GreetingEvent(".greet"));
+            //jda.addEventListener(new GreetingEvent(".greet"));
             TextCommands handler = new TextCommands("");
             handler.add(".turfwar", new TurfWar(".turfwar", "Does a thing"));
+            handler.add(".ranked", new RankedBattle(".ranked", "Does a thing"));
+            handler.add(".league", new LeagueBattle(".league", "Does a thing"));
             jda.addEventListener(handler);
             //note you can have a listener for each type of event, it may be easier to write response behaviour programatically this way
             //NOTE 2 - implement a red-black tree that binds commands to class listeners that then executes accordingly

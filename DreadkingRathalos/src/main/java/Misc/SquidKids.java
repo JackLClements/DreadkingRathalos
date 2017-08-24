@@ -74,12 +74,62 @@ public class SquidKids {
         return stages;
     }
 
-    public static String[] rankedBattle() {
-        return new String[3];
+    public static Stage[] rankedBattle() {
+        Stage[] stages = new Stage[2];
+        String jString = pullJSON();
+        JSONObject json = new JSONObject(jString);
+        JSONArray regular = new JSONArray(json.get("gachi").toString());
+        
+        ArrayList<JSONObject> ranked = new ArrayList<>();
+
+        for (int i = 0; i < regular.length(); i++) {
+            ranked.add(regular.getJSONObject(i));
+        }
+        sortObjects(ranked); //sorts objects, passed by reference so should be fine
+        
+        System.out.println(ranked.get(0).toString());
+        try {
+            JSONObject rankedMode = new JSONObject(ranked.get(0).get("rule").toString());
+            JSONObject stage = new JSONObject(ranked.get(0).get("stage_a").toString());
+            Stage stageAbean = new Stage(stage.getString("name"), rankedMode.getString("name"), new URL(IMG_URL + stage.get("image")));
+            stage = new JSONObject(ranked.get(0).get("stage_b").toString());
+            Stage stageBbean = new Stage(stage.getString("name"), rankedMode.getString("name"), new URL(IMG_URL + stage.get("image")));  
+            stages[0] = stageAbean;
+            stages[1] = stageBbean;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return stages;
     }
 
-    public static String[] leagueBattle() {
-        return new String[3];
+    public static Stage[] leagueBattle() {
+        Stage[] stages = new Stage[2];
+        String jString = pullJSON();
+        JSONObject json = new JSONObject(jString);
+        JSONArray regular = new JSONArray(json.get("league").toString());
+        
+        ArrayList<JSONObject> ranked = new ArrayList<>();
+
+        for (int i = 0; i < regular.length(); i++) {
+            ranked.add(regular.getJSONObject(i));
+        }
+        sortObjects(ranked); //sorts objects, passed by reference so should be fine
+        
+        System.out.println(ranked.get(0).toString());
+        try {
+            JSONObject rankedMode = new JSONObject(ranked.get(0).get("rule").toString());
+            JSONObject stage = new JSONObject(ranked.get(0).get("stage_a").toString());
+            Stage stageAbean = new Stage(stage.getString("name"), rankedMode.getString("name"), new URL(IMG_URL + stage.get("image")));
+            stage = new JSONObject(ranked.get(0).get("stage_b").toString());
+            Stage stageBbean = new Stage(stage.getString("name"), rankedMode.getString("name"), new URL(IMG_URL + stage.get("image")));  
+            stages[0] = stageAbean;
+            stages[1] = stageBbean;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }        
+        return stages;
     }
 
     public static void sortObjects(ArrayList<JSONObject> objects) {
