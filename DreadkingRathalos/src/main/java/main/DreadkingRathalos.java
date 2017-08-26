@@ -26,7 +26,7 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter;
  * @author Jack L. Clements
  */
 public class DreadkingRathalos extends ListenerAdapter{ //currently extends listener, extend to own thread
-    private static final String TOKEN = "placeholder"; //I really ought to obscure this in some fashion
+    
     //note - https://github.com/DV8FromTheWorld/JDA/blob/master/src/examples/java/MessageListenerExample.java
     /**
      * @param args the command line arguments

@@ -28,4 +28,7 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.10'
     compile 'net.dv8tion:JDA:3.2.0_241'
     compile 'net.dv8tion:JDA:3.2.0_241:javadoc' //turns out this is how your force javadoc, thanks netbeans   
+    compile 'com.squareup.okhttp3:okhttp:3.8.1'
+
+
 }
