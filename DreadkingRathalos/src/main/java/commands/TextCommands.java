@@ -4,18 +4,18 @@ package commands;
 
 import java.util.TreeMap;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 /**
  *
  * @author Jack L. Clements
  */
-public class TextCommands extends Command{
+public class TextCommands extends ListenerAdapter{
         
     private TreeMap<String, SubCommand> commands;
     
     
     public TextCommands(String commandKey) {
-        super(commandKey);
         commands = new TreeMap<String, SubCommand>();
     }
     /**
@@ -30,7 +30,6 @@ public class TextCommands extends Command{
             String content = e.getMessage().getStrippedContent().trim().toLowerCase(); //normalise
             String command = content.split(" ")[0]; //takes first command that matches regex (maybe?) test
             if(commands.get(command) != null){
-                System.out.println(command);
                 commands.get(command).doAction(e);
             }
         }
