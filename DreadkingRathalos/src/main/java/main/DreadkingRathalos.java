@@ -31,7 +31,7 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter;
  */
 public class DreadkingRathalos extends ListenerAdapter { //currently extends listener, extend to own thread
 
-    private static final String TOKEN = "MzQwNjE2NDM2NjY4MTcwMjQw.DF1Hyw.lXKU3scjIXzttcBWYUAS8-DbqcA"; //I really ought to obscure this in some fashion
+    private static final String TOKEN = "TOKEN"; //I really ought to obscure this in some fashion
     //note - https://github.com/DV8FromTheWorld/JDA/blob/master/src/examples/java/MessageListenerExample.java
     
     private static JDA api;
