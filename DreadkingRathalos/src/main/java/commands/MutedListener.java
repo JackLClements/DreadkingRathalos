@@ -58,10 +58,16 @@ public class MutedListener extends ListenerAdapter {
             guildMuted.remove(user);
         }
     }
+    
+    public static void addGuild(Guild guild){
+        muted.put(guild, new HashSet<>());
+    }
 
     public static void addGuilds(List<Guild> guilds) {
         for(Guild guild : guilds){
             muted.put(guild, new HashSet<>());
         }
     }
+    
+    //TODO add remove guild
 }

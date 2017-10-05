@@ -14,13 +14,13 @@ import java.util.Map;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.VoiceChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import net.dv8tion.jda.core.managers.AudioManager;
 
 /**
- *
+ * NOTE - NEW CHANNELS RESUME WHATEVER PLAYLIST THEY HAD
+ * CHANGE CHANNEL CREATION TO STOP TRACKS
  * @author Jack L. Clements
  */
 public class AudioChannelManager extends ListenerAdapter {
@@ -44,7 +44,7 @@ public class AudioChannelManager extends ListenerAdapter {
             musicManager = new GuildMusicManager(playerManager);
             musicManagers.put(guildId, musicManager);
         }
-
+        
         guild.getAudioManager().setSendingHandler(musicManager.getSendHandler());
 
         return musicManager;

@@ -14,10 +14,14 @@ import commands.TextCommands;
 import commands.TurfWar;
 import commands.Unban;
 import commands.UnmuteUser;
+import java.util.ArrayList;
+import java.util.Collection;
+import net.dv8tion.jda.bot.JDABot;
 
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
+import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
@@ -27,44 +31,50 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter;
  */
 public class DreadkingRathalos extends ListenerAdapter { //currently extends listener, extend to own thread
 
-    private static final String TOKEN = "test"; //I really ought to obscure this in some fashion
+    private static final String TOKEN = "MzQwNjE2NDM2NjY4MTcwMjQw.DF1Hyw.lXKU3scjIXzttcBWYUAS8-DbqcA"; //I really ought to obscure this in some fashion
     //note - https://github.com/DV8FromTheWorld/JDA/blob/master/src/examples/java/MessageListenerExample.java
+    
+    private static JDA api;
+    
+    
     
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         // TODO 
-        //1. Hello World
         //2. Basic running behaviour, response to commands without bricking channel
-        //3. EventListener
-        //4. Audio
         //5. Other features
         //Eventually - run on AWS cloud as far jar
         login();
 
     }
-
+    
     public static void login() { //note - set token
         //build blocking blocks until login, async waits until msg, can load resources this way
         try {
-            JDA jda = new JDABuilder(AccountType.BOT).setToken(TOKEN).addEventListener(new DreadkingRathalos()).buildBlocking(); //add event listener
+            JDABuilder jda = new JDABuilder(AccountType.BOT).setToken(TOKEN); //add event listener
             //jda.addEventListener(new GreetingEvent(".greet"));
-            TextCommands handler = new TextCommands("");
-            handler.add(".turfwar", new TurfWar(".turfwar", "Does a thing"));
-            handler.add(".ranked", new RankedBattle(".ranked", "Does a thing"));
-            handler.add(".league", new LeagueBattle(".league", "Does a thing"));
-            handler.add(".mute", new MuteUser(".mute", "Does a thing"));
-            handler.add(".unmute", new UnmuteUser(".unmute", "Does a thing"));
-            handler.add(".kickban", new KickBan(".kickban", "Does a thing"));
-            handler.add(".unban", new Unban(".unban", "Does a thing"));
-            handler.add(".nuke", new Nuke(".nuke", "Does a thing"));
-            MutedListener.addGuilds(jda.getGuilds());
-
-            jda.addEventListener(new GreetingEvent());
+            TextCommands handler = new TextCommands();
+            handler.add(".turfwar", new TurfWar(".turfwar", "Displays current Turf War stages"));
+            handler.add(".ranked", new RankedBattle(".ranked", "Displayes current Ranked stages and gamemode"));
+            handler.add(".league", new LeagueBattle(".league", "Displayes current Ranked stages and gamemode"));
+            handler.add(".mute", new MuteUser(".mute", "Mutes the mentioned users (assuming you have permission)"));
+            handler.add(".unmute", new UnmuteUser(".unmute", "Unmutes the mentioned users (assuming you have permission)"));
+            handler.add(".kickban", new KickBan(".kickban", "Kicks and bans a mentioned user"));
+            handler.add(".unban", new Unban(".unban", "Unbans the mentioned users"));
+            handler.add(".nuke", new Nuke(".nuke", "Deletes queued messages"));
+            //jda.addEventListener(new GreetingEvent());
             jda.addEventListener(new MutedListener());
             jda.addEventListener(new AudioChannelManager());
             jda.addEventListener(handler);
+            
+            
+            api = jda.buildBlocking();
+            
+            MutedListener.addGuilds(api.getGuilds());
+            
+            
             //note you can have a listener for each type of event, it may be easier to write response behaviour programatically this way
             //NOTE 2 - implement a red-black tree that binds commands to class listeners that then executes accordingly
             //NOTE 3 - all listeners trigger during all events, so it may be prudent to have a single listener object that passes commands along
@@ -88,5 +98,7 @@ public class DreadkingRathalos extends ListenerAdapter { //currently extends lis
         boolean bot = author.isBot(); //is author a bot
         System.out.println("msg - " + msg);
     }
+    
+    //need update for invites to new servers to join immediately
 
 }
