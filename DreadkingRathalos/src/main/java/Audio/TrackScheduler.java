@@ -38,6 +38,7 @@ class TrackScheduler extends AudioEventAdapter{
         // track goes to the queue instead.
         if (!player.startTrack(track, true)) {
             queue.offer(track);
+            
         }
     }
 
@@ -49,6 +50,15 @@ class TrackScheduler extends AudioEventAdapter{
         // giving null to startTrack, which is a valid argument and will simply stop the player.
         player.startTrack(queue.poll(), false);
     }
+    
+    public void pauseTrack(){
+        //Pause track
+        player.setPaused(true);
+    }
+    
+    public void resumeTrack(){
+        player.setPaused(false);
+    }
 
     @Override
     public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
@@ -56,6 +66,11 @@ class TrackScheduler extends AudioEventAdapter{
         if (endReason.mayStartNext) {
             nextTrack();
         }
+    }
+    
+    @Override
+    public void onTrackStuck(AudioPlayer player, AudioTrack track, long thresholdMs){
+        nextTrack();
     }
 
 }

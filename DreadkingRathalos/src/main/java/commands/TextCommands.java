@@ -20,7 +20,7 @@ public class TextCommands extends ListenerAdapter {
     private TreeMap<String, SubCommand> commands;
 
     public TextCommands() {
-        commands = new TreeMap<String, SubCommand>();
+        commands = new TreeMap<>();
     }
 
     /**
@@ -43,7 +43,7 @@ public class TextCommands extends ListenerAdapter {
                 builder.setColor(Color.DARK_GRAY);
                 builder.setTimestamp(Instant.now());
                 for (Map.Entry<String, SubCommand> entry : commands.entrySet()) {
-                    builder.addField(entry.getKey(), entry.getValue().getDescription(), true);
+                    builder.addField(entry.getKey(), entry.getValue().getDescription(), false);
                 }
                 e.getChannel().sendMessage(builder.build()).queue();
             }

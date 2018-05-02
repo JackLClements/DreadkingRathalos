@@ -32,12 +32,11 @@ public class MutedListener extends ListenerAdapter {
                 e.getMessage().delete().queue();
             }
             if (!e.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_MANAGE)) {
-                e.getChannel().sendMessage("I do not have the ability to mute users. Admin, please turn on \"Manage Messages\" in my permission settings.").queue();
+                e.getChannel().sendMessage("I do not have the ability to mute users. Admin, please turn on \"Manage Messages\" in permission settings.").queue();
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
     }
 
     public static void muteUser(Guild guild, User user) {

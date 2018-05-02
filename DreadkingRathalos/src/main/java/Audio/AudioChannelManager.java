@@ -51,7 +51,7 @@ public class AudioChannelManager extends ListenerAdapter {
     }
 
     //is there sense in abstracting this further?
-    //unlikely as it would require static contexts with guild related pointers.
+    //unlikely as it would require static contexts with guild related ID
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
         String[] command = event.getMessage().getContent().split(" ", 2);
@@ -60,8 +60,15 @@ public class AudioChannelManager extends ListenerAdapter {
         if (guild != null) {
             if (".play".equals(command[0]) && command.length == 2) {
                 loadAndPlay(event.getTextChannel(), command[1]);
-            } else if (".skip".equals(command[0])) {
+            } 
+            else if(".play".equals(command[0]) && command.length == 1){
+                resume(event.getTextChannel());
+            }
+            else if (".skip".equals(command[0])) {
                 skipTrack(event.getTextChannel());
+            }
+            else if (".pause".equals(command[0])){
+                pause(event.getTextChannel());
             }
         }
 
@@ -79,7 +86,7 @@ public class AudioChannelManager extends ListenerAdapter {
                 
 
                 play(channel.getGuild(), musicManager, track);
-                channel.sendMessage("Adding to queue " + track.getInfo().title).queue();
+                channel.sendMessage("Adding to queue - " + track.getInfo().title).queue();
             }
 
             @Override
@@ -90,7 +97,7 @@ public class AudioChannelManager extends ListenerAdapter {
                     firstTrack = playlist.getTracks().get(0);
                 }
 
-                channel.sendMessage("Adding to queue " + firstTrack.getInfo().title + " (first track of playlist " + playlist.getName() + ")").queue();
+                channel.sendMessage("Adding to queue - " + firstTrack.getInfo().title + " (first track of playlist " + playlist.getName() + ")").queue();
 
                 play(channel.getGuild(), musicManager, firstTrack);
             }
@@ -113,8 +120,19 @@ public class AudioChannelManager extends ListenerAdapter {
     
     private void play(Guild guild, GuildMusicManager musicManager, AudioTrack track) {
         connect(guild.getAudioManager());
-
         musicManager.scheduler.queue(track);
+    }
+    
+    private void resume(TextChannel channel){
+        GuildMusicManager musicManager = getMusicManager(channel.getGuild());
+        channel.sendMessage("Playback resumed.").queue();
+        musicManager.scheduler.resumeTrack();
+    }
+    
+    private void pause(TextChannel channel){
+        GuildMusicManager musicManager = getMusicManager(channel.getGuild());
+        channel.sendMessage("Playback paused.").queue();
+        musicManager.scheduler.pauseTrack();
     }
 
     private void skipTrack(TextChannel channel) {
@@ -125,8 +143,8 @@ public class AudioChannelManager extends ListenerAdapter {
 
     private void connect(AudioManager audioManager) {
         if (!audioManager.isConnected() && !audioManager.isAttemptingToConnect()) {
-            if (!audioManager.getGuild().getVoiceChannelsByName("music", true).isEmpty()) {
-                audioManager.openAudioConnection(audioManager.getGuild().getVoiceChannelsByName("music", true).get(0));
+            if (!audioManager.getGuild().getVoiceChannelsByName("Music", true).isEmpty()) {
+                audioManager.openAudioConnection(audioManager.getGuild().getVoiceChannelsByName("Music", true).get(0));
             } 
             else {
                 if (audioManager.getGuild().getSelfMember().hasPermission(Permission.MANAGE_CHANNEL)) {
